@@ -2,6 +2,7 @@ import { forwardRef, Ref, useImperativeHandle, useState } from "react";
 
 export type CounterRef = {
   reset: () => void;
+  checkSubscribed: (value: boolean) => void;
 };
 
 interface CounterProps {}
@@ -21,7 +22,10 @@ function Counter({}: CounterProps, ref: Ref<CounterRef>) {
     setCount(0);
   };
 
-  useImperativeHandle(ref, () => ({ reset }));
+  useImperativeHandle(ref, () => ({
+    reset,
+    checkSubscribed: (value) => console.log(value),
+  }));
 
   return (
     <div>
