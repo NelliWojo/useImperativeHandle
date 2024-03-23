@@ -1,6 +1,12 @@
-import { useState } from "react";
+import { forwardRef, Ref, useImperativeHandle, useState } from "react";
 
-export default function Counter() {
+export type CounterRef = {
+  reset: () => void;
+};
+
+interface CounterProps {}
+
+function Counter({}: CounterProps, ref: Ref<CounterRef>) {
   const [count, setCount] = useState(0);
 
   const increment = () => {
@@ -15,6 +21,8 @@ export default function Counter() {
     setCount(0);
   };
 
+  useImperativeHandle(ref, () => ({ reset }));
+
   return (
     <div>
       <h1>Count: {count}</h1>
@@ -23,3 +31,5 @@ export default function Counter() {
     </div>
   );
 }
+
+export default forwardRef(Counter);
